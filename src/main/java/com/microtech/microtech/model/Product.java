@@ -33,6 +33,8 @@ public class Product {
     @Column(nullable = false)
     private double price;
 
+    private boolean deleted = false;
+
     @NotBlank(message = "Description is required")
     @Size(min = 10, max = 500, message = "Description must be between 10 and 500 characters")
     @Column(nullable = false)
