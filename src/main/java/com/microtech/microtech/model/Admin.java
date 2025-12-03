@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @DiscriminatorValue("client")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Admin extends User{
 }
