@@ -1,4 +1,4 @@
-package com.microtech.microtech.dto.request;
+package com.microtech.microtech.dto.request.auth;
 
 import jakarta.validation.constraints.NotBlank;
 

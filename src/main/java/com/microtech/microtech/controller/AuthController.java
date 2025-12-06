@@ -1,7 +1,7 @@
 package com.microtech.microtech.controller;
 
-import com.microtech.microtech.dto.request.LoginRequest;
-import com.microtech.microtech.dto.response.LoginResponse;
+import com.microtech.microtech.dto.request.auth.LoginRequest;
+import com.microtech.microtech.dto.response.auth.LoginResponse;
 import com.microtech.microtech.service.AuthService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;

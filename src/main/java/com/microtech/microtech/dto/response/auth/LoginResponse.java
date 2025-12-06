@@ -1,4 +1,4 @@
-package com.microtech.microtech.dto.response;
+package com.microtech.microtech.dto.response.auth;
 
 import lombok.Builder;
 
