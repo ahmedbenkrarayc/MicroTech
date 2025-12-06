@@ -48,8 +48,7 @@ public class SessionService {
     public void clear() {
         HttpSession session = getSession();
         if (session != null) {
-            session.removeAttribute(USER_ID_KEY);
-            session.removeAttribute(USER_ROLE_KEY);
+            session.invalidate();
         }
     }
 }
