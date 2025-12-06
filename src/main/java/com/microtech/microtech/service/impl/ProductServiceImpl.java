@@ -11,6 +11,9 @@ import com.microtech.microtech.repository.OrderItemRepository;
 import com.microtech.microtech.repository.ProductRepository;
 import com.microtech.microtech.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,5 +62,12 @@ public class ProductServiceImpl implements ProductService {
 
         //hard delete
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<ProductResponse> getProductsFiltered(Long id, String name, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return productRepository.findAllProductsFiltered(id, name, pageable)
+                .map(productMapper::toResponse);
     }
 }
