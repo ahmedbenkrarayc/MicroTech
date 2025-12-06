@@ -1,7 +1,9 @@
 package com.microtech.microtech.service.impl;
 
 import com.microtech.microtech.dto.request.product.CreateProductRequest;
+import com.microtech.microtech.dto.request.product.UpdateProductRequest;
 import com.microtech.microtech.dto.response.product.ProductResponse;
+import com.microtech.microtech.exception.ResourceNotFoundException;
 import com.microtech.microtech.exception.UniqueResourceException;
 import com.microtech.microtech.mapper.ProductMapper;
 import com.microtech.microtech.model.Product;
@@ -30,5 +32,15 @@ public class ProductServiceImpl implements ProductService {
         Product saved = productRepository.save(product);
 
         return productMapper.toResponse(saved);
+    }
+
+    @Override
+    public ProductResponse update(Long id, UpdateProductRequest request) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id : "+ id));
+
+        productMapper.updateEntityFromDto(request, product);
+
+        return productMapper.toResponse(product);
     }
 }
