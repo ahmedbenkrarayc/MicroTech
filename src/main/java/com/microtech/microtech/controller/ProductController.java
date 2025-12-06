@@ -6,6 +6,7 @@ import com.microtech.microtech.dto.response.product.ProductResponse;
 import com.microtech.microtech.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +43,17 @@ public class ProductController {
         return ResponseEntity
                 .noContent()
                 .build();
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ProductResponse>> getProductsFiletered(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) String name,
+            @RequestParam(defaultValue = "0")  int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return ResponseEntity.ok(
+            productService.getProductsFiltered(id, name, page, size)
+        );
     }
 }
