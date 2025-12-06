@@ -7,6 +7,7 @@ import com.microtech.microtech.exception.ResourceNotFoundException;
 import com.microtech.microtech.exception.UniqueResourceException;
 import com.microtech.microtech.mapper.ProductMapper;
 import com.microtech.microtech.model.Product;
+import com.microtech.microtech.repository.OrderItemRepository;
 import com.microtech.microtech.repository.ProductRepository;
 import com.microtech.microtech.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final OrderItemRepository orderItemRepository;
 
     @Override
     public ProductResponse create(CreateProductRequest request) {
@@ -42,5 +44,20 @@ public class ProductServiceImpl implements ProductService {
         productMapper.updateEntityFromDto(request, product);
 
         return productMapper.toResponse(product);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id : "+ id));
+
+        if(orderItemRepository.existsByProductId(id)){
+            //soft delete
+            product.setDeleted(true);
+            return;
+        }
+
+        //hard delete
+        productRepository.deleteById(id);
     }
 }

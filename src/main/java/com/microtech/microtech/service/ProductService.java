@@ -7,4 +7,5 @@ import com.microtech.microtech.dto.response.product.ProductResponse;
 public interface ProductService {
     ProductResponse create(CreateProductRequest request);
     ProductResponse update(Long id, UpdateProductRequest request);
+    void delete(Long id);
 }
