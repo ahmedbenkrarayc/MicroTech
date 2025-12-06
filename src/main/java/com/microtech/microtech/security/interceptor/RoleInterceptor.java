@@ -34,7 +34,7 @@ public class RoleInterceptor implements HandlerInterceptor {
 
         String currentUserRole = sessionService.getUserRole();
         if(currentUserRole == null){
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("You must be logged in.");
         }
 
         boolean allowed = Arrays.stream(annotation.roles())
