@@ -8,7 +8,6 @@ import com.microtech.microtech.security.exception.UnauthorizedException;
 import com.microtech.microtech.security.service.PasswordService;
 import com.microtech.microtech.security.service.SessionService;
 import com.microtech.microtech.service.AuthService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,5 +38,10 @@ public class AuthServiceImpl implements AuthService {
                 .userId(user.getId())
                 .role(user.getRole().name())
                 .build();
+    }
+
+    @Override
+    public void logout() {
+        sessionService.clear();
     }
 }
