@@ -1,16 +1,14 @@
 package com.microtech.microtech.controller;
 
 import com.microtech.microtech.dto.request.product.CreateProductRequest;
+import com.microtech.microtech.dto.request.product.UpdateProductRequest;
 import com.microtech.microtech.dto.response.product.ProductResponse;
 import com.microtech.microtech.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/product")
@@ -27,5 +25,14 @@ public class ProductController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponse> update(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateProductRequest request
+    ) {
+        ProductResponse response = productService.update(id, request);
+        return ResponseEntity.ok(response);
     }
 }
