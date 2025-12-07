@@ -4,6 +4,7 @@ import com.microtech.microtech.model.enums.OrderStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,7 +43,10 @@ public class Order {
     @Column(nullable = false)
     private float total;
 
-    @Size(max = 50, message = "Promocode cannot exceed 50 characters")
+    @Pattern(
+            regexp = "^PROMO-[A-Z0-9]{4}$",
+            message = "Promo code must follow the format PROMO-XXXX where X is an uppercase letter or digit"
+    )
     private String promocode;
 
     @NotNull(message = "Order date is required")

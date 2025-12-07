@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OrderItem {
     @EmbeddedId
-    private OrderItemKey id;
+    private OrderItemKey id = new OrderItemKey();
 
     @Min(value = 1, message = "Quantity must be at least 1")
     @Column(nullable = false)

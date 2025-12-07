@@ -23,5 +23,5 @@ public class Client extends User {
     private String cin;
 
     @Enumerated(EnumType.STRING)
-    private CustomerTier tier;
+    private CustomerTier tier = CustomerTier.BASIC;
 }
