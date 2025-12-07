@@ -61,4 +61,11 @@ public class ClientServiceImpl implements ClientService {
 
         clientRepository.deleteById(id);
     }
+
+    @Override
+    public ClientResponse viewByCin(String Cin) {
+        Client client = clientRepository.findByCin(Cin)
+                .orElseThrow(() -> new ResourceNotFoundException("No client found with this cin : "+Cin));
+        return clientMapper.toResponse(client);
+    }
 }
