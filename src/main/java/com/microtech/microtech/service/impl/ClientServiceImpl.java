@@ -1,7 +1,9 @@
 package com.microtech.microtech.service.impl;
 
 import com.microtech.microtech.dto.request.auth.CreateClientRequest;
+import com.microtech.microtech.dto.request.auth.UpdateClientRequest;
 import com.microtech.microtech.dto.response.auth.ClientResponse;
+import com.microtech.microtech.exception.ResourceNotFoundException;
 import com.microtech.microtech.exception.UniqueResourceException;
 import com.microtech.microtech.mapper.ClientMapper;
 import com.microtech.microtech.model.Client;
@@ -39,5 +41,15 @@ public class ClientServiceImpl implements ClientService {
         Client saved = clientRepository.save(client);
 
         return clientMapper.toResponse(saved);
+    }
+
+    @Override
+    public ClientResponse update(Long id, UpdateClientRequest request) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found with this id : "+ id));
+
+        clientMapper.updateEntityFromDto(request, client);
+
+        return clientMapper.toResponse(client);
     }
 }
