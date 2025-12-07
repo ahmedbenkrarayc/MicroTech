@@ -52,4 +52,13 @@ public class ClientServiceImpl implements ClientService {
 
         return clientMapper.toResponse(client);
     }
+
+    @Override
+    public void delete(Long id) {
+        if(!clientRepository.existsById(id)){
+            throw new ResourceNotFoundException("Client not found with id : "+id);
+        }
+
+        clientRepository.deleteById(id);
+    }
 }

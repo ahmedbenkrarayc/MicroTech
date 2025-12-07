@@ -7,4 +7,5 @@ import com.microtech.microtech.dto.response.auth.ClientResponse;
 public interface ClientService {
     ClientResponse create(CreateClientRequest request);
     ClientResponse update(Long id, UpdateClientRequest request);
+    void delete(Long id);
 }
