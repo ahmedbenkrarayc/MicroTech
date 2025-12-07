@@ -1,16 +1,14 @@
 package com.microtech.microtech.controller;
 
 import com.microtech.microtech.dto.request.auth.CreateClientRequest;
+import com.microtech.microtech.dto.request.auth.UpdateClientRequest;
 import com.microtech.microtech.dto.response.auth.ClientResponse;
 import com.microtech.microtech.service.ClientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/client")
@@ -29,5 +27,12 @@ public class ClientController {
                 .body(response);
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<ClientResponse> update(
+        @PathVariable Long id,
+        @Valid @RequestBody UpdateClientRequest request
+    ) {
+        ClientResponse response = clientService.update(id, request);
+        return ResponseEntity.ok(response);
+    }
 }
