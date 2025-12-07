@@ -42,4 +42,10 @@ public class ClientController {
         return ResponseEntity.noContent()
                 .build();
     }
+
+    @GetMapping("/{cin}")
+    public ResponseEntity<ClientResponse> getByCin(@PathVariable String cin) {
+        ClientResponse response = clientService.viewByCin(cin);
+        return ResponseEntity.ok(response);
+    }
 }
