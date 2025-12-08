@@ -22,7 +22,7 @@ public class Payment {
     private Long id;
 
     @Min(value = 1, message = "Payment number must be at least 1")
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private int paymentNumber;
 
     @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
@@ -34,7 +34,6 @@ public class Payment {
     private LocalDate paymentDate;
 
     @NotNull(message = "Date of encaissement is required")
-    @Column(nullable = false)
     private LocalDate dateEncaissement;
 
     @ManyToOne(fetch = FetchType.LAZY)
