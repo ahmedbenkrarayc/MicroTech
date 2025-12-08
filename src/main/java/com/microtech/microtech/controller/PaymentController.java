@@ -2,6 +2,7 @@ package com.microtech.microtech.controller;
 
 import com.microtech.microtech.dto.request.payment.CreatePaymentRequest;
 import com.microtech.microtech.dto.response.payment.PaymentResponse;
+import com.microtech.microtech.security.annotation.RolesAllowed;
 import com.microtech.microtech.service.PaymentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
+    @RolesAllowed(roles = {"ADMIN"})
     @PostMapping
     public ResponseEntity<PaymentResponse> create(
             @Valid @RequestBody CreatePaymentRequest request
