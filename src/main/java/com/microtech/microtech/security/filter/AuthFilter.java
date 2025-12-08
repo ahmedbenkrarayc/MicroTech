@@ -25,7 +25,7 @@ public class AuthFilter extends HttpFilter {
 
         String path = request.getRequestURI();
 
-        if(path.equals("/login") || path.startsWith("/public")) {
+        if(path.equals("/api/auth/login") || path.startsWith("/public")) {
             chain.doFilter(request, response);
             return;
         }

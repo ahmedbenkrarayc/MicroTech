@@ -2,8 +2,10 @@ package com.microtech.microtech.service.impl;
 
 import com.microtech.microtech.dto.request.order.CreateOrderRequest;
 import com.microtech.microtech.dto.request.order.OrderProductDto;
+import com.microtech.microtech.dto.response.order.OrderResponse;
 import com.microtech.microtech.event.UpdateStockEvent;
 import com.microtech.microtech.exception.ResourceNotFoundException;
+import com.microtech.microtech.mapper.OrderMapper;
 import com.microtech.microtech.model.*;
 import com.microtech.microtech.model.enums.CustomerTier;
 import com.microtech.microtech.model.enums.OrderStatus;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
     private final OrderItemRepository orderItemRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final OrderMapper orderMapper;
     @Value("${tva.value}")
     private float tva;
 
@@ -97,6 +101,17 @@ public class OrderServiceImpl implements OrderService {
 
         orderItemRepository.saveAll(orderItems);
         return stockValid ? "Order Created Successfully Number : "+ order.getId() : "Order Rejected Because of stock, Number : "+ order.getId();
+    }
+
+    @Override
+    public List<OrderResponse> ordersOfClient(Long clientId) {
+        if(!clientRepository.existsById(clientId))
+            throw new ResourceNotFoundException("Client not found with id : " + clientId);
+
+        return orderRepository.findByClientId(clientId)
+                .stream()
+                .map(orderMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     private List<Product> fetchProducts(List<OrderProductDto> orderProducts) {

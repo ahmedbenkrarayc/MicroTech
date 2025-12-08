@@ -1,6 +1,8 @@
 package com.microtech.microtech.repository;
 
 import com.microtech.microtech.model.Product;
+import jakarta.validation.constraints.NotNull;
+import lombok.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +19,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
         SELECT p FROM Product p
         WHERE (:id IS NULL OR p.id = :id)
           AND (:name IS NULL OR TRIM(:name) = '' OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%')))
+          AND p.deleted = false
     """)
     Page<Product> findAllProductsFiltered(@Param("id") Long id, @Param("name") String name, Pageable pageable);
+
+    @Override
+    @NonNull
+    @Query("SELECT p FROM Product p WHERE p.id = :id AND p.deleted = false")
+    Optional<Product> findById(@NonNull @Param("id") Long id);
 }

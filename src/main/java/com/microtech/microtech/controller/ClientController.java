@@ -3,6 +3,7 @@ package com.microtech.microtech.controller;
 import com.microtech.microtech.dto.request.auth.CreateClientRequest;
 import com.microtech.microtech.dto.request.auth.UpdateClientRequest;
 import com.microtech.microtech.dto.response.auth.ClientResponse;
+import com.microtech.microtech.dto.response.statistics.ClientStatisticResponse;
 import com.microtech.microtech.service.ClientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,12 @@ public class ClientController {
     @GetMapping("/{cin}")
     public ResponseEntity<ClientResponse> getByCin(@PathVariable String cin) {
         ClientResponse response = clientService.viewByCin(cin);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/statistics")
+    public ResponseEntity<ClientStatisticResponse> statistics() {
+        ClientStatisticResponse response = clientService.statistics();
         return ResponseEntity.ok(response);
     }
 }
