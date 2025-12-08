@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue("client")
+@DiscriminatorValue("admin")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Admin extends User{
